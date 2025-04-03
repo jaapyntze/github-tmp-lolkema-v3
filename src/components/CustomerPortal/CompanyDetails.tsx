@@ -51,14 +51,14 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Bedrijfsgegevens</h2>
+      <h2 className="text-2xl font-bold text-secondary-900 mb-6">Bedrijfsgegevens</h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Bedrijfsnaam</label>
+          <label className="block text-sm font-medium text-secondary-700">Bedrijfsnaam</label>
           <div className="mt-1 relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Building2 className="h-5 w-5 text-gray-400" />
+              <Building2 className="h-5 w-5 text-secondary-400" />
             </div>
             <input
               type="text"
@@ -68,18 +68,18 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
               disabled={!editing}
               className={`block w-full pl-10 py-2 sm:text-sm rounded-md ${
                 editing
-                  ? 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'border-secondary-300 focus:ring-primary-500 focus:border-primary-500'
+                  : 'bg-secondary-50 border-secondary-200'
               }`}
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Contactpersoon</label>
+          <label className="block text-sm font-medium text-secondary-700">Contactpersoon</label>
           <div className="mt-1 relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <User className="h-5 w-5 text-gray-400" />
+              <User className="h-5 w-5 text-secondary-400" />
             </div>
             <input
               type="text"
@@ -89,18 +89,18 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
               disabled={!editing}
               className={`block w-full pl-10 py-2 sm:text-sm rounded-md ${
                 editing
-                  ? 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'border-secondary-300 focus:ring-primary-500 focus:border-primary-500'
+                  : 'bg-secondary-50 border-secondary-200'
               }`}
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Telefoonnummer</label>
+          <label className="block text-sm font-medium text-secondary-700">Telefoonnummer</label>
           <div className="mt-1 relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Phone className="h-5 w-5 text-gray-400" />
+              <Phone className="h-5 w-5 text-secondary-400" />
             </div>
             <input
               type="tel"
@@ -110,18 +110,18 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
               disabled={!editing}
               className={`block w-full pl-10 py-2 sm:text-sm rounded-md ${
                 editing
-                  ? 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'border-secondary-300 focus:ring-primary-500 focus:border-primary-500'
+                  : 'bg-secondary-50 border-secondary-200'
               }`}
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Adres</label>
+          <label className="block text-sm font-medium text-secondary-700">Adres</label>
           <div className="mt-1 relative rounded-md shadow-sm">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <MapPin className="h-5 w-5 text-gray-400" />
+              <MapPin className="h-5 w-5 text-secondary-400" />
             </div>
             <input
               type="text"
@@ -131,8 +131,8 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
               disabled={!editing}
               className={`block w-full pl-10 py-2 sm:text-sm rounded-md ${
                 editing
-                  ? 'border-gray-300 focus:ring-green-500 focus:border-green-500'
-                  : 'bg-gray-50 border-gray-200'
+                  ? 'border-secondary-300 focus:ring-primary-500 focus:border-primary-500'
+                  : 'bg-secondary-50 border-secondary-200'
               }`}
             />
           </div>
@@ -152,14 +152,14 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
                   });
                   setEditing(false);
                 }}
-                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                className="px-4 py-2 border border-secondary-300 rounded-md shadow-sm text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50"
               >
                 Annuleren
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 disabled:opacity-50"
+                className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 disabled:opacity-50"
               >
                 {loading ? (
                   <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -173,7 +173,7 @@ const CompanyDetails: React.FC<CompanyDetailsProps> = ({ client, setClient }) =>
             <button
               type="button"
               onClick={() => setEditing(true)}
-              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              className="px-4 py-2 border border-secondary-300 rounded-md shadow-sm text-sm font-medium text-secondary-700 bg-white hover:bg-secondary-50"
             >
               Bewerken
             </button>

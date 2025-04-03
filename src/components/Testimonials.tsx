@@ -30,10 +30,10 @@ const Testimonials = () => {
     <section id="testimonials" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">
             Wat Onze Klanten Zeggen
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-secondary-500">
             De tevredenheid van onze klanten staat centraal in alles wat we doen.
           </p>
         </div>
@@ -45,7 +45,7 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`bg-gray-50 rounded-lg shadow-md p-8 hover:shadow-lg transition-all duration-700 transform ${
+              className={`bg-secondary-50 rounded-lg shadow-md p-8 hover:shadow-lg transition-all duration-700 transform ${
                 isInView 
                   ? 'opacity-100 translate-y-0' 
                   : 'opacity-0 translate-y-10'
@@ -57,21 +57,21 @@ const Testimonials = () => {
                   <Star
                     key={i}
                     className={`h-5 w-5 ${
-                      i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                      i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-secondary-300'
                     }`}
                   />
                 ))}
               </div>
-              <p className="text-gray-600 italic mb-6">"{testimonial.content}"</p>
+              <p className="text-secondary-600 italic mb-6">"{testimonial.content}"</p>
               <div className="flex items-center">
-                <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-                  <span className="text-green-800 font-bold">
+                <div className="h-10 w-10 rounded-full bg-primary-100 flex items-center justify-center">
+                  <span className="text-primary-800 font-bold">
                     {testimonial.name.charAt(0)}
                   </span>
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-900">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
+                  <p className="text-sm font-medium text-secondary-900">{testimonial.name}</p>
+                  <p className="text-sm text-secondary-500">{testimonial.role}</p>
                 </div>
               </div>
             </div>

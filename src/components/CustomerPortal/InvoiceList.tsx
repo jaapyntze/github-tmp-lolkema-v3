@@ -59,7 +59,7 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ clientId }) => {
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
       </div>
     );
   }
@@ -67,16 +67,16 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ clientId }) => {
   if (invoices.length === 0) {
     return (
       <div className="text-center py-12">
-        <FileText className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-2 text-sm font-medium text-gray-900">Geen facturen</h3>
-        <p className="mt-1 text-sm text-gray-500">Er zijn nog geen facturen beschikbaar.</p>
+        <FileText className="mx-auto h-12 w-12 text-secondary-400" />
+        <h3 className="mt-2 text-sm font-medium text-secondary-900">Geen facturen</h3>
+        <p className="mt-1 text-sm text-secondary-500">Er zijn nog geen facturen beschikbaar.</p>
       </div>
     );
   }
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Facturen</h2>
+      <h2 className="text-2xl font-bold text-secondary-900 mb-6">Facturen</h2>
 
       <div className="relative">
         {/* Shadow overlay */}
@@ -90,24 +90,24 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ clientId }) => {
           className="overflow-x-auto"
         >
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-secondary-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Factuurnummer
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Datum
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Vervaldatum
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Bedrag
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Status
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                <th className="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase tracking-wider whitespace-nowrap">
                   Acties
                 </th>
               </tr>
@@ -115,23 +115,23 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ clientId }) => {
             <tbody className="bg-white divide-y divide-gray-200">
               {invoices.map((invoice) => (
                 <tr key={invoice.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-secondary-900">
                     {invoice.invoice_number}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                     {format(new Date(invoice.issued_date), 'd MMMM yyyy', { locale: nl })}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-500">
                     {format(new Date(invoice.due_date), 'd MMMM yyyy', { locale: nl })}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-secondary-900">
                     € {invoice.amount.toFixed(2)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                         invoice.status === 'paid'
-                          ? 'bg-green-100 text-green-800'
+                          ? 'bg-primary-100 text-primary-800'
                           : invoice.status === 'pending'
                           ? 'bg-yellow-100 text-yellow-800'
                           : 'bg-red-100 text-red-800'
@@ -150,7 +150,7 @@ const InvoiceList: React.FC<InvoiceListProps> = ({ clientId }) => {
                         href={invoice.pdf_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-green-600 hover:text-green-900 inline-flex items-center"
+                        className="text-primary-600 hover:text-primary-900 inline-flex items-center"
                       >
                         <Download className="h-4 w-4 mr-1" />
                         Download

@@ -36,10 +36,27 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
     fetchOperations();
   }, [clientId]);
 
+  // Helper function to safely convert metric values to strings
+  const formatMetricValue = (value: any): string => {
+    if (value === null || value === undefined) return '-';
+    if (typeof value === 'string') return value;
+    if (typeof value === 'number') return value.toString();
+    if (typeof value === 'boolean') return value ? 'Ja' : 'Nee';
+    if (Array.isArray(value)) return value.join(', ');
+    if (typeof value === 'object') {
+      try {
+        return JSON.stringify(value);
+      } catch {
+        return '[Complex Object]';
+      }
+    }
+    return String(value);
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-primary-600" />
       </div>
     );
   }
@@ -47,9 +64,9 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
   if (operations.length === 0) {
     return (
       <div className="text-center py-12">
-        <PenTool className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-2 text-sm font-medium text-gray-900">Geen werkzaamheden</h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <PenTool className="mx-auto h-12 w-12 text-secondary-400" />
+        <h3 className="mt-2 text-sm font-medium text-secondary-900">Geen werkzaamheden</h3>
+        <p className="mt-1 text-sm text-secondary-500">
           Er zijn nog geen werkzaamheden geregistreerd.
         </p>
       </div>
@@ -62,29 +79,29 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
 
   const OperationCard = ({ operation }: { operation: PrecisionOperation }) => (
     <div
-      className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+      className="bg-white rounded-lg border border-secondary-200 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
       onClick={() => setSelectedOperation(operation)}
     >
       <div className="p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">{operation.operation_type}</h3>
+        <h3 className="text-lg font-semibold text-secondary-900 mb-4">{operation.operation_type}</h3>
         
         <div className="space-y-3">
           <div className="flex items-start">
-            <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-            <span className="text-gray-600">{operation.location}</span>
+            <MapPin className="h-5 w-5 text-secondary-400 mr-2 mt-0.5" />
+            <span className="text-secondary-600">{operation.location}</span>
           </div>
           
           <div className="flex items-start">
-            <Calendar className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-            <div className="text-gray-600">
+            <Calendar className="h-5 w-5 text-secondary-400 mr-2 mt-0.5" />
+            <div className="text-secondary-600">
               {format(new Date(operation.start_date), 'd MMMM yyyy', { locale: nl })}
             </div>
           </div>
 
           <div className="flex items-start">
-            <Tractor className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-            <div className="text-gray-600">
-              <span className="text-gray-600">Gebruikte machines:</span>
+            <Tractor className="h-5 w-5 text-secondary-400 mr-2 mt-0.5" />
+            <div className="text-secondary-600">
+              <span className="text-secondary-600">Gebruikte machines:</span>
               <ul className="mt-1 list-disc list-inside text-sm">
                 {operation.equipment_used.map((equipment, index) => (
                   <li key={index}>{equipment}</li>
@@ -95,8 +112,8 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
 
           {operation.area_covered && (
             <div className="flex items-start">
-              <Ruler className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-              <span className="text-gray-600">
+              <Ruler className="h-5 w-5 text-secondary-400 mr-2 mt-0.5" />
+              <span className="text-secondary-600">
                 Oppervlakte: {operation.area_covered} ha
               </span>
             </div>
@@ -104,8 +121,8 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
 
           {operation.notes && (
             <div className="flex items-start">
-              <PenTool className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
-              <span className="text-gray-600">{operation.notes}</span>
+              <PenTool className="h-5 w-5 text-secondary-400 mr-2 mt-0.5" />
+              <span className="text-secondary-600">{operation.notes}</span>
             </div>
           )}
         </div>
@@ -115,11 +132,11 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">Werkzaamheden</h2>
+      <h2 className="text-2xl font-bold text-secondary-900 mb-6">Werkzaamheden</h2>
 
       {/* Planned Operations */}
       <div className="mb-12">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Geplande werkzaamheden</h3>
+        <h3 className="text-xl font-semibold text-secondary-900 mb-4">Geplande werkzaamheden</h3>
         {plannedOperations.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {plannedOperations.map((operation) => (
@@ -127,13 +144,13 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">Geen geplande werkzaamheden</p>
+          <p className="text-secondary-500">Geen geplande werkzaamheden</p>
         )}
       </div>
 
       {/* Completed Operations */}
       <div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Uitgevoerde werkzaamheden</h3>
+        <h3 className="text-xl font-semibold text-secondary-900 mb-4">Uitgevoerde werkzaamheden</h3>
         {completedOperations.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {completedOperations.map((operation) => (
@@ -141,7 +158,7 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">Geen uitgevoerde werkzaamheden</p>
+          <p className="text-secondary-500">Geen uitgevoerde werkzaamheden</p>
         )}
       </div>
 
@@ -150,7 +167,7 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+              <h3 className="text-2xl font-bold text-secondary-900 mb-6">
                 {selectedOperation.operation_type}
               </h3>
 
@@ -158,13 +175,13 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
                 {/* Operation details */}
                 <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-medium text-gray-900">Locatie</h4>
-                    <p className="text-gray-600">{selectedOperation.location}</p>
+                    <h4 className="font-medium text-secondary-900">Locatie</h4>
+                    <p className="text-secondary-600">{selectedOperation.location}</p>
                   </div>
                   
                   <div>
-                    <h4 className="font-medium text-gray-900">Datum</h4>
-                    <p className="text-gray-600">
+                    <h4 className="font-medium text-secondary-900">Datum</h4>
+                    <p className="text-secondary-600">
                       {format(new Date(selectedOperation.start_date), 'd MMMM yyyy', { locale: nl })}
                     </p>
                   </div>
@@ -172,8 +189,8 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
 
                 {/* Equipment used */}
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">Gebruikte machines</h4>
-                  <ul className="list-disc list-inside text-gray-600">
+                  <h4 className="font-medium text-secondary-900 mb-2">Gebruikte machines</h4>
+                  <ul className="list-disc list-inside text-secondary-600">
                     {selectedOperation.equipment_used.map((equipment, index) => (
                       <li key={index}>{equipment}</li>
                     ))}
@@ -183,29 +200,31 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
                 {/* Area covered */}
                 {selectedOperation.area_covered && (
                   <div>
-                    <h4 className="font-medium text-gray-900">Oppervlakte</h4>
-                    <p className="text-gray-600">{selectedOperation.area_covered} ha</p>
+                    <h4 className="font-medium text-secondary-900">Oppervlakte</h4>
+                    <p className="text-secondary-600">{selectedOperation.area_covered} ha</p>
                   </div>
                 )}
 
                 {/* Notes */}
                 {selectedOperation.notes && (
                   <div>
-                    <h4 className="font-medium text-gray-900">Notities</h4>
-                    <p className="text-gray-600">{selectedOperation.notes}</p>
+                    <h4 className="font-medium text-secondary-900">Notities</h4>
+                    <p className="text-secondary-600">{selectedOperation.notes}</p>
                   </div>
                 )}
 
                 {/* Metrics */}
                 {selectedOperation.metrics && Object.keys(selectedOperation.metrics).length > 0 && (
                   <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Meetgegevens</h4>
-                    <div className="bg-gray-50 rounded-lg p-4">
+                    <h4 className="font-medium text-secondary-900 mb-2">Meetgegevens</h4>
+                    <div className="bg-secondary-50 rounded-lg p-4">
                       <dl className="grid grid-cols-2 gap-4">
                         {Object.entries(selectedOperation.metrics).map(([key, value]) => (
                           <div key={key}>
-                            <dt className="text-sm font-medium text-gray-500">{key}</dt>
-                            <dd className="mt-1 text-sm text-gray-900">{value}</dd>
+                            <dt className="text-sm font-medium text-secondary-500">{key}</dt>
+                            <dd className="mt-1 text-sm text-secondary-900">
+                              {formatMetricValue(value)}
+                            </dd>
                           </div>
                         ))}
                       </dl>
@@ -217,7 +236,7 @@ const OperationsList: React.FC<OperationsListProps> = ({ clientId }) => {
               <div className="mt-6 flex justify-end">
                 <button
                   onClick={() => setSelectedOperation(null)}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+                  className="px-4 py-2 bg-secondary-100 text-secondary-700 rounded-md hover:bg-secondary-200"
                 >
                   Sluiten
                 </button>

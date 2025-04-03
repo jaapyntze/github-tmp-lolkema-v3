@@ -15,21 +15,21 @@ const About = () => {
             className="space-y-4 sm:space-y-6"
           >
             <h2 
-              className={`text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 transition-all duration-1000 transform ${
+              className={`text-2xl sm:text-3xl md:text-4xl font-extrabold text-secondary-900 transition-all duration-1000 transform ${
                 isTextInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
               Over Loonbedrijf Lolkema
             </h2>
             <p 
-              className={`mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed transition-all duration-1000 delay-200 transform ${
+              className={`mt-3 sm:mt-4 text-base sm:text-lg text-secondary-600 leading-relaxed transition-all duration-1000 delay-200 transform ${
                 isTextInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
               In meer dan 40 jaar tijd is Loonbedrijf Lolkema uitgegroeid van een eenmanszaak tot een onderneming met gecertificeerde medewerkers. Met een actueel machinepark wordt een grote verscheidenheid aan werkzaamheden uitgevoerd in de agrarische sector en de grond, weg en waterbouw. Door een flexibele inzet van een gemotiveerd team wordt elke dag gestreefd naar een hoge klanttevredenheid.
             </p>
             <p 
-              className={`mt-3 sm:mt-4 text-base sm:text-lg text-gray-600 leading-relaxed transition-all duration-1000 delay-300 transform ${
+              className={`mt-3 sm:mt-4 text-base sm:text-lg text-secondary-600 leading-relaxed transition-all duration-1000 delay-300 transform ${
                 isTextInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
@@ -41,7 +41,7 @@ const About = () => {
                 isTextInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             >
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900">Waarom kiezen voor ons?</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-secondary-900">Waarom kiezen voor ons?</h3>
               <ul className="mt-3 sm:mt-4 space-y-2 sm:space-y-3">
                 {[
                   'Modern machinepark met GPS-precisie',
@@ -57,8 +57,8 @@ const About = () => {
                     }`}
                     style={{ transitionDelay: `${500 + index * 100}ms` }}
                   >
-                    <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm sm:text-base text-gray-600">{item}</span>
+                    <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6 text-primary-600 mr-2 flex-shrink-0 mt-0.5" />
+                    <span className="text-sm sm:text-base text-secondary-600">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -74,23 +74,44 @@ const About = () => {
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <div className="col-span-2">
                 <img
-                  src="images/actie.jpg"
+                  src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/actie.jpg"
+                  srcSet="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/actie-480w.jpg 480w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/actie-768w.jpg 768w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/actie-1024w.jpg 1024w"
+                  sizes="(max-width: 640px) 480px,
+                         (max-width: 1024px) 768px,
+                         1024px"
                   alt="Voorbereiding landbouwgrond"
                   className="rounded-lg shadow-md h-48 sm:h-64 w-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div>
                 <img
-                  src="images/sleepslangen.jpg"
-                  alt="Sleepslangen"
+                  src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/sleepslangen.jpg"
+                  srcSet="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/sleepslangen-480w.jpg 480w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/sleepslangen-768w.jpg 768w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/sleepslangen-1024w.jpg 1024w"
+                  sizes="(max-width: 640px) 480px,
+                         (max-width: 1024px) 768px,
+                         1024px"
+                  alt="Trekker op land met slangenhaspel voor het sleepslangen"
                   className="rounded-lg shadow-md h-32 sm:h-48 w-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div>
                 <img
-                  src="images/kraan2.jpg"
-                  alt="Team of workers"
+                  src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/kraan.jpg"
+                  srcSet="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/kraan-480w.jpg 480w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/kraan-768w.jpg 768w,
+                          https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/kraan-1024w.jpg 1024w"
+                  sizes="(max-width: 640px) 480px,
+                         (max-width: 1024px) 768px,
+                         1024px"
+                  alt="Kraan op bouwgrond"
                   className="rounded-lg shadow-md h-32 sm:h-48 w-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </div>

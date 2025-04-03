@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://loonbedrijflolkema.nl/sitemap.xml
+
+# Disallow access to specific files and directories
+Disallow: /private/
+Disallow: /admin/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /*?*
+
+# Allow crawling of important content
+Allow: /blog/
+Allow: /diensten/
+Allow: /portal/
+Allow: /images/
+
+# Crawl-delay directive (optional, in seconds)
+Crawl-delay: 10

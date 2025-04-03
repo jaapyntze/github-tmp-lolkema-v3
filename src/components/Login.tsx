@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '../lib/supabase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Building2, Mail, CheckCircle, ArrowLeft } from 'lucide-react';
 
@@ -10,15 +10,21 @@ interface LoginProps {
   redirectPath?: string;
 }
 
-const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
+const Login: React.FC<LoginProps> = ({ redirectPath }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [view, setView] = useState<'sign_in' | 'forgotten_password'>('sign_in');
   const [rememberMe, setRememberMe] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
+
+  // Get the intended path from location state, fallback to provided redirectPath or '/portal'
+  const intendedPath = (location.state as { from?: string })?.from || redirectPath || '/portal';
 
   useEffect(() => {
+    // Delay mounting to ensure smooth transition
     const timer = setTimeout(() => {
       setMounted(true);
     }, 50);
@@ -28,13 +34,14 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
 
   useEffect(() => {
     if (user) {
+      setIsExiting(true);
       const timer = setTimeout(() => {
-        navigate(redirectPath);
+        navigate(intendedPath, { replace: true });
       }, 300);
 
       return () => clearTimeout(timer);
     }
-  }, [user, navigate, redirectPath]);
+  }, [user, navigate, intendedPath]);
 
   // Update Supabase session configuration when rememberMe changes
   useEffect(() => {
@@ -56,20 +63,24 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
 
   return (
     <>
-      <div className={`min-h-screen flex ${mounted ? 'fade-enter' : 'opacity-0'}`}>
+      <div className={`min-h-screen flex transition-opacity duration-300 ${mounted ? 'opacity-100' : 'opacity-0'} ${isExiting ? 'opacity-0' : ''}`}>
         {/* Left side - Background image and benefits */}
         <div className="hidden lg:flex lg:w-[60%] relative">
           <div className="absolute inset-0">
             <img
-              src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80"
+              src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Login/login-hero.jpg"
               alt="Agricultural landscape"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-green-900/70 backdrop-blur-sm"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/90 backdrop-blur-[5px]"></div>
           </div>
           <div className="relative w-full flex items-center justify-center p-12">
             <div className="max-w-lg">
-              <img src="/images/logo.png" alt="Lolkema Logo" className="h-12 w-auto mb-8" />
+              <img 
+                src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/logo-black.png" 
+                alt="Lolkema Logo" 
+                className="h-12 w-auto mb-8" 
+              />
               <h2 className="text-3xl font-bold text-white mb-8">
                 Voordelen van een klantportaal account
               </h2>
@@ -83,7 +94,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                   'Realtime updates over uw opdrachten'
                 ].map((benefit, index) => (
                   <div key={index} className="flex items-start">
-                    <CheckCircle className="h-6 w-6 text-green-400 mr-3 flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="h-6 w-6 text-primary-600 mr-3 flex-shrink-0 mt-0.5" />
                     <p className="text-white text-lg">{benefit}</p>
                   </div>
                 ))}
@@ -96,21 +107,25 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
         <div className="w-full lg:w-[40%] flex flex-col justify-center px-4 sm:px-6 lg:px-8 bg-white">
           <div className="sm:mx-auto sm:w-full sm:max-w-md">
             <div className="lg:hidden flex justify-center mb-6">
-              <img src="/images/logo-blackblue.png" alt="Lolkema Logo" className="h-12 w-auto" />
+              <img 
+                src="https://xjwlrohfjskzalfgvbug.supabase.co/storage/v1/object/public/public/Home/logo-black.png" 
+                alt="Lolkema Logo" 
+                className="h-12 w-auto" 
+              />
             </div>
             {view === 'forgotten_password' && (
               <button
                 onClick={() => setView('sign_in')}
-                className="flex items-center text-sm text-gray-600 hover:text-green-600 mb-6"
+                className="flex items-center text-sm text-secondary-600 hover:text-primary-600 mb-6"
               >
                 <ArrowLeft className="h-4 w-4 mr-1" />
                 Terug naar inloggen
               </button>
             )}
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-secondary-900 text-center">
               {view === 'sign_in' ? 'Welkom bij het Klantportaal' : 'Wachtwoord herstellen'}
             </h2>
-            <p className="mt-2 text-center text-sm sm:text-base text-gray-600">
+            <p className="mt-2 text-center text-sm sm:text-base text-secondary-600">
               {view === 'sign_in' 
                 ? 'Log in om toegang te krijgen tot uw persoonlijke omgeving'
                 : 'Vul uw e-mailadres in om een herstel-link te ontvangen'
@@ -119,7 +134,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
           </div>
 
           <div className="mt-8 sm:mx-auto w-full sm:max-w-md">
-            <div className="bg-white py-8 px-4 sm:px-10 shadow-lg sm:rounded-lg border border-gray-100">
+            <div className="bg-white py-8 px-4 sm:px-10 shadow-lg sm:rounded-lg border border-secondary-100">
               <Auth
                 supabaseClient={supabase}
                 view={view}
@@ -127,14 +142,15 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                   theme: ThemeSupa,
                   style: {
                     button: {
-                      background: '#16a34a',
+                      background: '#dd2444',
                       borderRadius: '0.5rem',
+                      borderColor: 'transparent',
                       padding: '0.75rem 1rem',
                       fontSize: '0.875rem',
                       fontWeight: '500',
                       color: 'white',
                       '&:hover': {
-                        background: '#15803d',
+                        background: '#c41f3d',
                       },
                     },
                     input: {
@@ -143,8 +159,8 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                       fontSize: '0.875rem',
                       borderColor: '#e5e7eb',
                       '&:focus': {
-                        borderColor: '#16a34a',
-                        boxShadow: '0 0 0 1px #16a34a',
+                        borderColor: '#dd2444',
+                        boxShadow: '0 0 0 1px #dd2444',
                       },
                     },
                     label: {
@@ -153,10 +169,10 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                       marginBottom: '0.5rem',
                     },
                     anchor: {
-                      color: '#16a34a',
+                      color: '#dd2444',
                       fontSize: '0.875rem',
                       '&:hover': {
-                        color: '#15803d',
+                        color: '#c41f3d',
                       },
                     },
                     message: {
@@ -203,15 +219,15 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                         type="checkbox"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
-                        className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                        className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-secondary-300 rounded"
                       />
-                      <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                      <label htmlFor="remember-me" className="ml-2 block text-sm text-secondary-700">
                         Onthoud mij
                       </label>
                     </div>
                     <button
                       onClick={() => setView('forgotten_password')}
-                      className="text-sm text-green-600 hover:text-green-700"
+                      className="text-sm text-primary-600 hover:text-primary-700"
                     >
                       Wachtwoord vergeten?
                     </button>
@@ -220,7 +236,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
                   <div className="mt-6 text-center">
                     <button
                       onClick={() => setShowRequestModal(true)}
-                      className="text-sm text-gray-600 hover:text-green-600 transition-colors"
+                      className="text-sm text-secondary-600 hover:text-primary-600 transition-colors"
                     >
                       Nog geen account? Vraag er hier een aan
                     </button>
@@ -236,18 +252,18 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
       {showRequestModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
+            <h3 className="text-lg font-medium text-secondary-900 mb-4">
               Account aanvragen
             </h3>
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="text-sm text-secondary-600 mb-4">
               Neem contact op met onze klantenservice om een account aan te vragen voor het klantportaal. 
               Wij zorgen ervoor dat u zo snel mogelijk toegang krijgt.
             </p>
-            <div className="bg-gray-50 rounded-lg p-4 flex items-center">
-              <Mail className="h-5 w-5 text-gray-400 mr-3" />
+            <div className="bg-secondary-50 rounded-lg p-4 flex items-center">
+              <Mail className="h-5 w-5 text-secondary-400 mr-3" />
               <a 
                 href="mailto:info@loonbedrijflolkema.nl"
-                className="text-sm text-green-600 hover:text-green-700"
+                className="text-sm text-primary-600 hover:text-primary-700"
               >
                 info@loonbedrijflolkema.nl
               </a>
@@ -255,7 +271,7 @@ const Login: React.FC<LoginProps> = ({ redirectPath = '/blog/editor' }) => {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setShowRequestModal(false)}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+                className="px-4 py-2 bg-secondary-100 text-secondary-700 rounded-md hover:bg-secondary-200"
               >
                 Sluiten
               </button>

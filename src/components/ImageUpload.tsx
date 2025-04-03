@@ -95,23 +95,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUploaded, currentImage
           {...getRootProps()}
           className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
             isDragActive
-              ? 'border-green-500 bg-green-50'
-              : 'border-gray-300 hover:border-green-500'
+              ? 'border-primary-500 bg-primary-50'
+              : 'border-secondary-300 hover:border-primary-500'
           }`}
         >
           <input {...getInputProps()} />
           {uploading ? (
             <div className="flex flex-col items-center">
-              <Loader2 className="h-8 w-8 text-green-600 animate-spin" />
-              <p className="mt-2 text-sm text-gray-600">Uploading...</p>
+              <Loader2 className="h-8 w-8 text-primary-600 animate-spin" />
+              <p className="mt-2 text-sm text-secondary-600">Uploading...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center">
-              <Upload className="h-8 w-8 text-gray-400" />
-              <p className="mt-2 text-sm text-gray-600">
+              <Upload className="h-8 w-8 text-secondary-400" />
+              <p className="mt-2 text-sm text-secondary-600">
                 Sleep een afbeelding hierheen of klik om te uploaden
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-secondary-500 mt-1">
                 PNG, JPG, GIF tot 5MB
               </p>
             </div>

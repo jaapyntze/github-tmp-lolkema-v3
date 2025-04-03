@@ -12,13 +12,21 @@ const About = React.lazy(() => import('./components/About'));
 const Gallery = React.lazy(() => import('./components/Gallery'));
 const Blog = React.lazy(() => import('./components/Blog'));
 const BlogList = React.lazy(() => import('./components/BlogList'));
+const BlogPost = React.lazy(() => import('./components/BlogPost'));
 const Testimonials = React.lazy(() => import('./components/Testimonials'));
 const Contact = React.lazy(() => import('./components/Contact'));
 const Footer = React.lazy(() => import('./components/Footer'));
-const BlogEditor = React.lazy(() => import('./components/BlogEditor'));
-const BlogPost = React.lazy(() => import('./components/BlogPost'));
 const Login = React.lazy(() => import('./components/Login'));
 const Dashboard = React.lazy(() => import('./components/CustomerPortal/Dashboard'));
+const AdminDashboard = React.lazy(() => import('./components/AdminDashboard/AdminDashboard'));
+
+// Lazy load service pages
+const AgrarischLoonwerk = React.lazy(() => import('./pages/services/AgrarischLoonwerk'));
+const GrondverzetInfra = React.lazy(() => import('./pages/services/GrondverzetInfra'));
+const WaterNatuur = React.lazy(() => import('./pages/services/CultuurtechnischWerk'));
+const CivieleTechniek = React.lazy(() => import('./pages/services/CivieleTechniek'));
+const TransportLogistiek = React.lazy(() => import('./pages/services/Transport'));
+const MachineVerhuur = React.lazy(() => import('./pages/services/Verhuur'));
 
 // Page transition wrapper
 function PageTransition({ children }: { children: React.ReactNode }) {
@@ -93,9 +101,10 @@ function HomePage() {
   );
 }
 
-function App() {
+function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,76 +117,88 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Check if current route should hide footer
+  const hideFooter = ['/admin', '/portal', '/login'].includes(location.pathname);
+
   if (isLoading) {
     return <LoadingScreen isExiting={isExiting} />;
   }
 
   return (
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <Suspense fallback={<LoadingScreen />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          
+          {/* Static service routes */}
+          <Route path="/diensten/agrarisch-loonwerk" element={<AgrarischLoonwerk />} />
+          <Route path="/diensten/grondverzet-infra" element={<GrondverzetInfra />} />
+          <Route path="/diensten/water-natuur" element={<WaterNatuur />} />
+          <Route path="/diensten/civiele-techniek" element={<CivieleTechniek />} />
+          <Route path="/diensten/transport-logistiek" element={<TransportLogistiek />} />
+          <Route path="/diensten/machine-verhuur" element={<MachineVerhuur />} />
+
+          <Route
+            path="/login"
+            element={
+              <PageTransition>
+                <Login />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <PageTransition>
+                <BlogList />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/blog/:slug"
+            element={
+              <PageTransition>
+                <BlogPost />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <PageTransition>
+                  <Suspense fallback={<LoadingScreen />}>
+                    <AdminDashboard />
+                  </Suspense>
+                </PageTransition>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/portal"
+            element={
+              <ProtectedRoute>
+                <PageTransition>
+                  <Suspense fallback={<LoadingScreen />}>
+                    <Dashboard />
+                  </Suspense>
+                </PageTransition>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
+      {!hideFooter && <Footer />}
+    </div>
+  );
+}
+
+function App() {
+  return (
     <Router>
       <AuthProvider>
-        <div className="min-h-screen bg-white">
-          <Navbar />
-          <Suspense fallback={<LoadingScreen />}>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route
-                path="/login"
-                element={
-                  <PageTransition>
-                    <Login redirectPath="/portal" />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="/blog"
-                element={
-                  <PageTransition>
-                    <BlogList />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="/blog/:slug"
-                element={
-                  <PageTransition>
-                    <BlogPost />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="/blog/editor"
-                element={
-                  <ProtectedRoute>
-                    <PageTransition>
-                      <BlogEditor />
-                    </PageTransition>
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/blog/editor/:id"
-                element={
-                  <ProtectedRoute>
-                    <PageTransition>
-                      <BlogEditor />
-                    </PageTransition>
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/portal"
-                element={
-                  <ProtectedRoute>
-                    <PageTransition>
-                      <Dashboard />
-                    </PageTransition>
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </Suspense>
-          <Footer />
-        </div>
+        <AppContent />
       </AuthProvider>
     </Router>
   );
