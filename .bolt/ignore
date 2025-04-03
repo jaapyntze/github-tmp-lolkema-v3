@@ -1,2 +1,5 @@
 src/components/ui/*
 hooks/use-toast.ts
+src/pages*
+src/components/AdminDashboard/*
+src/components/CustomerPortal/*

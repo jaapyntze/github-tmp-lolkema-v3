@@ -82,11 +82,11 @@ const Hero = () => {
           />
         </video>
         {/* Base gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/70" />
         
         {/* Red glow effect in bottom right corner */}
-        <div className="absolute bottom-0 right-0 w-[40vw] h-[40vh] bg-primary-500/20 blur-[100px] rounded-full mix-blend-soft-light transform translate-x-1/4 translate-y-1/4" />
-        <div className="absolute bottom-0 right-0 w-[30vw] h-[30vh] bg-primary-500/30 blur-[80px] rounded-full mix-blend-soft-light transform translate-x-1/3 translate-y-1/3" />
+        <div className="absolute bottom-0 right-0 w-[40vw] h-[40vh] bg-primary-500/20 blur-[100px] rounded-full mix-blend-soft-light transform translate-x-1/4 translate-y-1/4 opacity-30" />
+        <div className="absolute bottom-0 right-0 w-[30vw] h-[30vh] bg-primary-500/30 blur-[80px] rounded-full mix-blend-soft-light transform translate-x-1/3 translate-y-1/3 opacity-10" />
       </div>
 
       {/* Logo */}
