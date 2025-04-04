@@ -375,3 +375,10 @@ html {
 .prose img {
   @apply rounded-lg shadow-md my-4 max-w-full;
 }
+
+/* Service card active state for mobile */
+@layer utilities {
+  .is-active {
+    @apply lg:pointer-events-none;
+  }
+}
