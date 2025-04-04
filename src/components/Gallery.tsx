@@ -120,7 +120,7 @@ const Gallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-20 bg-secondary-50">
+    <section id="gallery" className="py-28 bg-secondary-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div 
           ref={titleRef as React.RefObject<HTMLDivElement>}

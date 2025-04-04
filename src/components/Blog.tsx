@@ -96,7 +96,7 @@ const Blog = () => {
   }
 
   return (
-    <section id="blog" className={`py-20 bg-secondary-50 ${isExiting ? 'fade-exit' : 'fade-enter'}`}>
+    <section id="blog" className={`py-28 bg-secondary-50 ${isExiting ? 'fade-exit' : 'fade-enter'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-secondary-900 sm:text-4xl">
